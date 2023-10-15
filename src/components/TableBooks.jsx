@@ -1,10 +1,21 @@
 import React from "react";
 import BooksList from "./BooksList";
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import { ChangeCircle } from '@mui/icons-material';
+import DeleteIcon from '@mui/icons-material/Delete';
+// import { Button } from "@mui/material";
+import { Button } from 'react-bootstrap';
+import ModalBook from "./Modal";
 
 
 function TableBooks() {
-    const { books, handleDelete, handleUpdate } = BooksList();
+    const [show, setShow] = React.useState(false);
+
+    const handleShow = () => {
+        setShow(!show);
+    };
+
+    const { books, handleDelete } = BooksList();
 
     return (
         <div>
@@ -24,13 +35,18 @@ function TableBooks() {
                             <td>{book.description}</td>
                             <td>{book.publishDate}</td>
                             <td>
-                                <button onClick={() => handleDelete(book.id)}>Delete</button>
-                                <button onClick={() => showModal(book)}>Alterar</button>
+                                <Button onClick={() => handleDelete(book.id)}>
+                                    <DeleteIcon />
+                                </Button>
+                                <Button onClick={handleShow}>
+                                    <ChangeCircle />
+                                </Button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            <ModalBook open={show} handleShow={handleShow}/>
         </div>
     );
 }

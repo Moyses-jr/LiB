@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import BooksList from './BooksList';
+import { FormControl, InputLabel, Input, Button, } from "@mui/material";
 
 function FormBook() {
-
   const handleUpdate = BooksList();
   const [formData, setFormData] = useState({
     title: '',
@@ -10,7 +10,6 @@ function FormBook() {
     publishDate: '',
   });
 
-  // Função para lidar com a alteração nos campos de entrada
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -19,46 +18,26 @@ function FormBook() {
     });
   };
 
-  // Função para lidar com o envio do formulário
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Dados do formulário:', formData);
-    handleUpdate(formData)
+    // handleUpdate(formData);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="title">Título:</label>
-        <input
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="description">Descrição:</label>
-        <input
-          type="text"
-          name="description"
-          value={formData.description}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="publishDate">Data de Publicação:</label>
-        <input
-          type="date"
-          name="publishDate"
-          value={formData.publishDate}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <button type="submit">Enviar</button>
+      <FormControl margin="normal" fullWidth>
+        <InputLabel htmlFor="title">Título</InputLabel>
+        <Input id="title" name="title" type="text" value={formData.title} onChange={handleInputChange} />
+      </FormControl>
+      <FormControl margin="normal" fullWidth>
+        <InputLabel htmlFor="description">Descrição:</InputLabel>
+        <Input id="description" name="description" type="text" value={formData.description} onChange={handleInputChange} />
+      </FormControl>
+      <FormControl margin="normal" fullWidth>
+        <label>Data de Publicação</label>
+        <Input type="date" id="publishDate" name="publishDate" value={formData.publishDate} onChange={handleInputChange} />
+      </FormControl>
     </form>
   );
 }
