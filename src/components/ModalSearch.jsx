@@ -4,46 +4,11 @@ import clsx from 'clsx';
 import { styled, Box } from '@mui/system';
 import { Modal } from '@mui/base/Modal';
 import { ChangeCircle } from '@mui/icons-material';
-import FormBook from './FormBook';
-import axios from 'axios';
-import DataApi from './DataApi';
 import ShowBook from './ShowBook';
 
-function ModalBook({ dataBook, books, setBooks}) {
-    const [show, setShow] = React.useState(false);
-
-    const handleShow = () => {
-        setShow(true);
-    };
-
-    const handleClose = (accept, newData) => {
-        setShow(false);
-
-        if (accept) {
-            handleUpdate(newData)
-        }
-    };
-
-    const handleUpdate = async (dataBook) => {
-        const updatedBooks = books.map(book => {
-            if (book.id == dataBook.id) {
-                return { ...dataBook };
-            }
-            return book;
-        });
-        setBooks(updatedBooks);
-
-        try {
-            await axios.put(`https://fakerestapi.azurewebsites.net/api/v1/Books/${dataBook.id}`, { dataBook });
-            console.log(`Atualização bem-sucedida do livro: ${dataBook.title}`);
-        } catch (error) {
-            console.error('Erro na atualização:', error);
-        }
-    };
-
+function ModalSearch({ searchId, show , handleClose}) {
     return (
         <div>
-            <button onClick={handleShow} className="btn btn-primary"> <ChangeCircle /></button>
             <StyledModal
                 open={show}
                 onClose={handleClose}
@@ -52,14 +17,14 @@ function ModalBook({ dataBook, books, setBooks}) {
                 slots={{ backdrop: StyledBackdrop }}
             >
                 <Box sx={style}>
-                    <FormBook data={dataBook} handleClose={handleClose} />
+                  <ShowBook book={searchId} handleClose={handleClose}  />
                 </Box>
             </StyledModal>
         </div>
     );
 }
 
-export default ModalBook;
+export default ModalSearch;
 
 const Backdrop = React.forwardRef((props, ref) => {
     const { open, className, ...other } = props;

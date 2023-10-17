@@ -16,8 +16,8 @@ export default function BooksList() {
 
     const handleDelete = async (id) => {
         // Crie uma nova lista de livros excluindo o livro com o ID especificado
-        const updatedBooks = books.filter(book => book.id !== id);
-        setBooks(updatedBooks);
+        const deleteBooks = books.filter(book => book.id !== id);
+        setBooks(deleteBooks);
 
         try {
             const response = await axios.delete(`https://fakerestapi.azurewebsites.net/api/v1/Books/${id}`)
@@ -39,14 +39,22 @@ export default function BooksList() {
     };
 
     const handleUpdate = async (dataBook) => {
+        const updatedBooks = books.map(book => {
+            if (book.id == dataBook.id) {
+                return { ...dataBook };
+              }
+              return book;
+        });
+        setBooks(updatedBooks);
+
         try {
-            // Faça uma solicitação PUT para a API para atualizar os dados
-            const response = await axios.put('/api/update', formData);
-            console.log('Atualização bem-sucedida:', response.data);
+            await axios.put(`https://fakerestapi.azurewebsites.net/api/v1/Books/${dataBook.id}`,{dataBook});
+            console.log(`Atualização bem-sucedida`);
         } catch (error) {
             console.error('Erro na atualização:', error);
         }
     };
+    console.log(books);
 
     return { books, handleDelete, handleUpdate , handleInsert};
 }
