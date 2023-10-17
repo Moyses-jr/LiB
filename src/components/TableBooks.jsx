@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DeleteIcon from '@mui/icons-material/Delete';
+import Search from '@mui/icons-material/Search';
 import ModalBook from "./Modal";
 import ModalSearch from "./ModalSearch";
 
 
 function TableBooks() {
     const [books, setBooks] = useState([]);
-    const [idBook, setIdBook] = useState(null);
+    const [oneBook, setOneBook] = useState([]);
+    const [show, setShow] = React.useState(false);
 
     useEffect(() => {
         axios.get(`https://fakerestapi.azurewebsites.net/api/v1/Books`)
@@ -17,18 +19,15 @@ function TableBooks() {
             .catch((error) => {
                 console.error('Erro na requisição:', error);
             });
+            console.log('opa')
     }, []);
-
-    // const handleSearch = (id) => {
-    //     setIdBook(id)
-    // };
 
     const handleDelete = async (id) => {
         const deleteBooks = books.filter(book => book.id !== id);
         setBooks(deleteBooks);
 
         try {
-            const response = await axios.delete(`https://fakerestapi.azurewebsites.net/api/v1/Books/${id}`)
+            await axios.delete(`https://fakerestapi.azurewebsites.net/api/v1/Books/${id}`)
             console.log(`Livro com ID ${id} foi excluído com sucesso.`);
 
         } catch (error) {
@@ -36,26 +35,16 @@ function TableBooks() {
         }
     };
 
-    const [show, setShow] = React.useState(false);
-
-    const handleShow = (id) => {
+    const handleShow = (book) => {
         setShow(true);
-        setIdBook(id)
+        setOneBook(book)
     };
 
     const handleClose = () => {
         setShow(false);
-        setIdBook(null)
+        setOneBook(null)
     };
 
-    // const handleInsert = async (dataBook) => {
-    //     try {
-    //         const response = await axios.post(`https://fakerestapi.azurewebsites.net/api/v1/Books/${id}`);
-    //         console.log('Inserção bem-sucedida:', response.data);
-    //     } catch (error) {
-    //         console.error('Erro na inserção:', error);
-    //     }
-    // };
     return (
         <div>
             <h2>Lista de Livros</h2>
@@ -69,7 +58,7 @@ function TableBooks() {
                 </thead>
                 <tbody>
                     {books.map((book) => (
-                        <tr key={book.id} onClick={() => handleShow(book.id)}>
+                        <tr key={book.id}>
                             <td>{book.title}</td>
                             <td>{book.description}</td>
                             <td>{book.publishDate}</td>
@@ -77,13 +66,14 @@ function TableBooks() {
                                 <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <button onClick={() => handleDelete(book.id)} className="btn btn-primary"><DeleteIcon /></button>
                                     <ModalBook dataBook={book} books={books} setBooks={setBooks} />
+                                    <button onClick={() => handleShow(book)} className="btn btn-primary"><Search /></button>
                                 </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <ModalSearch searchId={idBook} show={show} handleClose={handleClose}/>
+            <ModalSearch oneBook={oneBook} show={show} handleClose={handleClose}/>
         </div>
     );
 }

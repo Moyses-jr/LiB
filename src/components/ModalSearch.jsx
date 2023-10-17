@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { styled, Box } from '@mui/system';
 import { Modal } from '@mui/base/Modal';
-import { ChangeCircle } from '@mui/icons-material';
 import ShowBook from './ShowBook';
 
-function ModalSearch({ searchId, show , handleClose}) {
+function ModalSearch({ oneBook, show , handleClose}) {
     return (
         <div>
             <StyledModal
@@ -17,7 +16,7 @@ function ModalSearch({ searchId, show , handleClose}) {
                 slots={{ backdrop: StyledBackdrop }}
             >
                 <Box sx={style}>
-                  <ShowBook book={searchId} handleClose={handleClose}  />
+                  <ShowBook oneBook={oneBook} handleClose={handleClose}  />
                 </Box>
             </StyledModal>
         </div>

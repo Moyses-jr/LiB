@@ -6,10 +6,7 @@ function DataApi(searchId) {
 
     async function listBook() {
 
-        const apiUrl = searchId ?
-        `https://fakerestapi.azurewebsites.net/api/v1/Books/${searchId}`
-        :
-        `https://fakerestapi.azurewebsites.net/api/v1/Books/1`
+        const apiUrl = `https://fakerestapi.azurewebsites.net/api/v1/Books/${searchId}`
 
         try {
             const { data } = await axios.get(apiUrl)
@@ -33,6 +30,8 @@ function DataApi(searchId) {
     useEffect(() => {
         listBook()
     }, [])
+
+    console.log(dataLivros);
 
     return dataLivros;
 
