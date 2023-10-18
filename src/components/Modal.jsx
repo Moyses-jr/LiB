@@ -1,27 +1,26 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { styled, Box } from '@mui/system';
 import { Modal } from '@mui/base/Modal';
 import { ChangeCircle } from '@mui/icons-material';
-import FormBook from './FormBook';
 import axios from 'axios';
-import DataApi from './DataApi';
-import ShowBook from './ShowBook';
+import FormReact from './FormBooks/FormReact';
 
-function ModalBook({ dataBook, books, setBooks}) {
-    const [show, setShow] = React.useState(false);
+function ModalBook({ dataBook, books, setBooks }) {
+    const [show, setShow] = useState(false);
 
     const handleShow = () => {
         setShow(true);
     };
 
-    const handleClose = (accept, newData) => {
+    const handleClose = () => {
         setShow(false);
+    };
 
-        if (accept) {
-            handleUpdate(newData)
-        }
+    const handleSubmit = (data) => {
+        handleUpdate(data);
+        handleClose();
     };
 
     const handleUpdate = async (dataBook) => {
@@ -52,7 +51,7 @@ function ModalBook({ dataBook, books, setBooks}) {
                 slots={{ backdrop: StyledBackdrop }}
             >
                 <Box sx={style}>
-                    <FormBook data={dataBook} handleClose={handleClose} />
+                    <FormReact data={dataBook} handleClose={handleClose} handleSubmit={handleSubmit} />
                 </Box>
             </StyledModal>
         </div>

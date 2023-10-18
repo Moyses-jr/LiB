@@ -19,7 +19,6 @@ function TableBooks() {
             .catch((error) => {
                 console.error('Erro na requisição:', error);
             });
-            console.log('opa')
     }, []);
 
     const handleDelete = async (id) => {
@@ -46,14 +45,13 @@ function TableBooks() {
     };
 
     return (
-        <div>
-            <h2>Lista de Livros</h2>
+        <div className="content" >
             <table className="table table-hover">
                 <thead>
                     <tr>
-                        <th>Título</th>
-                        <th>Descrição</th>
-                        <th>Data de Publicação</th>
+                        <th>Títulos</th>
+                        <th>Descrições</th>
+                        <th>Data de Publicações</th>
                     </tr>
                 </thead>
                 <tbody>

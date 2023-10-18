@@ -1,7 +1,6 @@
 import React from 'react'
-import './App.css'
+import './styles/App.css'
 import { Route, Routes } from 'react-router-dom'
-import FormBook from './components/FormBook'
 import TableBooks from './components/TableBooks'
 
 import AppBar from '@mui/material/AppBar';
@@ -10,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import NavBar from './NavBar'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import FormReactInsert from './components/FormBooks/FormReactInsert';
 
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
 
       <Routes>
         <Route path="tableBooks" element={<TableBooks />} />
-        <Route path="insertBook" element={<FormBook />} />
+        <Route path="insertBook" element={<FormReactInsert />} />
         <Route path="*" element={<TableBooks />} />
       </Routes>
     </>
