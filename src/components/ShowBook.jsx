@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 function ShowBook({ oneBook, handleClose }) {
     
     const { title, description, excerpt, pageCount, publishDate } = oneBook;

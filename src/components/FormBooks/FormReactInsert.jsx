@@ -1,5 +1,4 @@
 import '../../styles/App.css'
-import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import validationSchema from './Schema';
 import axios from 'axios';
@@ -16,13 +15,12 @@ function FormReactInsert() {
 
     const handleSubmit = (data) => {
         handleInsert(data);
+
     };
 
     const handleInsert = async (dataBook) => {
-        dataBook.id = 0
-
         try {
-            await axios.put(`https://fakerestapi.azurewebsites.net/api/v1/Books/${dataBook.id}`, { dataBook });
+            await axios.post(`https://fakerestapi.azurewebsites.net/api/v1/Books/`, { dataBook });
             console.log(`Registro inserido com sucesso, livro: ${dataBook.title}`);
         } catch (error) {
             console.error('Erro ao inseir:', error);
